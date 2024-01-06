@@ -1,5 +1,6 @@
 import "../styles/slick.css";
 import "@/styles/globals.css";
+import "@/styles/main.scss";
 
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";

@@ -58,12 +58,11 @@ export default function NavigationBar() {
               }}
             >
               <Image
-                src={"/DfwAll.png"}
-                width={500}
-                height={500}
+                src={"/DFWLogo_nbg.png"}
+                width={120}
+                height={150}
                 priority
                 alt="logo"
-                style={{ objectFit: "contain", height: "80px", width: "165px" }}
               />
               {/* <p className="text-2xl bg-gradient-to-r text-transparent bg-clip-text from-[#003d7b] to-[#3a6066] font-semibold -skew-y-3">
                 Dfw All

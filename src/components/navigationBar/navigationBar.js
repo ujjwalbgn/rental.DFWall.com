@@ -89,8 +89,8 @@ export default function NavigationBar() {
         </nav>
       </header>
 
-      {/* Mobile Navigation */}
-      <nav className="fixed lg:hidden bottom-0 left-0 right-0 z-20 ">
+      {/* Mobile Navigation Hidden For now*/}
+      {/* <nav className="fixed lg:hidden bottom-0 left-0 right-0 z-20 ">
         <div className="bg-white dark:bg-[#141414] ">
           <ul className="flex w-full justify-between px-4 items-center text-[#3a6066] dark:text-[#007960]">
             <Link
@@ -117,7 +117,7 @@ export default function NavigationBar() {
             </Link>
           </ul>
         </div>
-      </nav>
+      </nav> */}
     </>
   );
 }

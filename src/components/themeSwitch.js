@@ -22,7 +22,7 @@ const ThemeSwitch = () => {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
-        fill="currentColor"
+        fill={theme === "dark" ? "#F09271" : "#F07C71"}
         className="text-gray-900 dark:text-gray-100 transition duration-[2000ms]"
       >
         {mounted && (theme === "dark" || resolvedTheme === "dark") ? (

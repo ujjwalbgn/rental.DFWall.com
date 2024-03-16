@@ -14,7 +14,7 @@ const Products = () => {
         <p className="font-medium text-4xl  text-center mb-9">Our Products</p>
         <div className="gap-20 items-center justify-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10">
           {/* Box 1 */}
-          <div className="text-center w-[300px] h-[400px] rounded-lg border-2 p-4 shadow-xl">
+          <div className="text-center w-[300px] h-[400px] rounded-lg border-1 p-4 shadow-xl">
             <div>
               <p className="text-2xl font-medium">Folding Chairs</p>
               <Image
@@ -35,7 +35,7 @@ const Products = () => {
             </div>
           </div>
           {/* Box 2 */}
-          <div className="text-center w-[300px] h-[400px] rounded-lg border-2 p-4 shadow-xl">
+          <div className="text-center w-[300px] h-[400px] rounded-lg border-1 p-4 shadow-xl">
             <div>
               <p className="text-2xl font-medium">Folding Tables</p>
               <Image
@@ -56,7 +56,7 @@ const Products = () => {
             </div>
           </div>
           {/* Box 3 */}
-          <div className="text-center w-[300px] h-[400px] rounded-lg border-2 p-4 shadow-xl">
+          <div className="text-center w-[300px] h-[400px] rounded-lg border-1 p-4 shadow-xl">
             <div>
               <p className="text-2xl font-medium">Cornhole Boards</p>
               <Image
@@ -77,7 +77,7 @@ const Products = () => {
             </div>
           </div>
           {/* Box 4 */}
-          <div className="text-center w-[300px] h-[400px] rounded-lg border-2 p-4 shadow-xl">
+          <div className="text-center w-[300px] h-[400px] rounded-lg border-1 p-4 shadow-xl">
             <div>
               <p className="text-2xl font-medium">Jumbo Jenga</p>
               <Image
@@ -98,7 +98,7 @@ const Products = () => {
             </div>
           </div>
           {/* Box 5 */}
-          <div className="text-center w-[300px] h-[400px] rounded-lg border-2 p-4 shadow-xl">
+          <div className="text-center w-[300px] h-[400px] rounded-lg border-1 p-4 shadow-xl">
             <div>
               <p className="text-xl font-medium">Giant Connect Four</p>
               <Image

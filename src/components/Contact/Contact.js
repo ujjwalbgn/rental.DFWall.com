@@ -6,9 +6,12 @@ const Contact = () => {
       <p className="text-2xl sm:text-xl md:text-4xl lg:text-5xl font-medium  mb-7 sm:text-2xl">
         Get in touch with us in one click
       </p>
-      <button className="py-2 px-4 mb-10 text-xl sm:text-lg md:text-xl lg:text-2xl font-medium  bg-blue-500 text-white rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-        Contact Us
-      </button>
+      <a href="https://script.google.com/macros/s/AKfycbysDnB8w3R29IF_wUEPOhdLpQGHiv1HEkqsDlzApwQoM9mYPCukgAwg3NtZU3oX0w52/exec" target="_blank">
+  <button class="py-2 px-4 mb-10 text-xl sm:text-lg md:text-xl lg:text-2xl font-medium bg-blue-500 text-white rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+    Contact Us
+  </button>
+</a>
+
     </div>
   );
 };

@@ -6,7 +6,6 @@ import { OurServices } from "../../assets/ourServices";
 import AnimatedTextWord from "../../components/AnimatedTextWord.js";
 import Contact from "../../components/Contact/Contact.js";
 import Offer from "../../components/Offers/Offers.js";
-import Products from "../../components/products/products.js";
 
 export default function HomePage() {
   const imageList = HomePageImages;
@@ -161,7 +160,6 @@ export default function HomePage() {
         </motion.div>
       </motion.div>
 
-      <Products />
       <Offer />
       <Contact />
     </div>

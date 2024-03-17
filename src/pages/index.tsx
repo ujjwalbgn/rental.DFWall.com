@@ -1,5 +1,5 @@
-import HomePage from "./homepage";
+import ProductPage from "../pages/product"
 
 export default function Home() {
-  return <HomePage />;
+  return <ProductPage />;
 }

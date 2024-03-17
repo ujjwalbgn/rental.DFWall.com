@@ -4,15 +4,13 @@ import VaseImage from "../../../public/utilities/design.png";
 import { HomePageImages } from "../../assets/homepageImages";
 import { OurServices } from "../../assets/ourServices";
 import AnimatedTextWord from "../../components/AnimatedTextWord.js";
-import Contact from "../../components/Contact/Contact.js";
-import Offer from "../../components/Offers/Offers.js";
 
 export default function HomePage() {
   const imageList = HomePageImages;
   const ourServicesList = OurServices;
 
   return (
-    <div className="relative mt-20 sm:mt-40 max-w-screen-xl mx-auto px-2">
+    <div className="relative mt-20 sm:mt-40 max-w-screen-xl mx-auto px-2 pb-40">
       {/* Heading Section */}
       <div className="flex">
         {/* Hide the image on small screens (hidden on sm and smaller) */}
@@ -159,9 +157,6 @@ export default function HomePage() {
           ))}
         </motion.div>
       </motion.div>
-
-      <Offer />
-      <Contact />
     </div>
   );
 }

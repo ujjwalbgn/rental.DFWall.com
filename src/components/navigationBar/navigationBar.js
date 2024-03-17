@@ -1,13 +1,24 @@
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { addDays } from "date-fns";
 import Image from "next/image";
-import ThemeSwitch from "../themeSwitch";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { IoSearchCircle } from "react-icons/io5";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 export default function NavigationBar() {
   const router = useRouter();
   const [activeLink, setActiveLink] = useState("");
   const [scrollActive, setScrollActive] = useState(false);
+
+  const [showDateRangePicker, setShowDateRangePicker] = useState(false);
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date(),
+    endDate: addDays(new Date(), 7),
+  });
 
   // Setting Hompage as the default current tab on load
   useEffect(() => {
@@ -40,14 +51,29 @@ export default function NavigationBar() {
     localStorage.setItem("currentTab", JSON.stringify(tabName));
   };
 
+  const handleDateChange = (dates) => {
+    setDateRange({ ...dates.range1 });
+    console.log(dateRange);
+  };
+
+  const handleDatePickerContainer = () => {
+    setShowDateRangePicker(!showDateRangePicker);
+  };
+
+  const handleSearch = () => {
+    setShowDateRangePicker(false);
+    console.log("handle search");
+  };
+
   return (
     <>
       <header
         className={
-          "fixed top-0 w-full z-30 transition-all bg-white dark:bg-[#141414]" +
+          "fixed top-0 w-full z-30 transition-all bg-white " +
           (scrollActive ? " shadow-md pt-0" : " ")
         }
       >
+        {/* Header */}
         <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 ">
           <div className="col-start-1 col-end-2 flex items-center">
             <Link
@@ -66,8 +92,6 @@ export default function NavigationBar() {
               />
             </Link>
           </div>
-          {/* This will dissapear in mobile view */}
-          <ul className="hidden lg:flex col-start-6 col-end-8 items-center"></ul>
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
             <Link
               href="/contactUs"
@@ -84,40 +108,61 @@ export default function NavigationBar() {
             >
               Contact Us
             </Link>
-            <ThemeSwitch />
+          </div>
+          {/* Search Bar */}
+          <div className="col-start-1  col-end-12  md:col-start-3 md:col-end-10 flex items-center justify-center">
+            <div className="flex items-center rounded-full border p-1 text-xs font-semibold drop-shadow-md cursor-pointer shadow-md shadow-[#d86c9e] px-4">
+              <div
+                className="group flex flex-col border-r-2 p-2 px-6 hover:bg-red-200 hover:rounded-3xl"
+                onClick={handleDatePickerContainer}
+              >
+                <p className="text-[#969e48] group-hover:scale-110 transition duration-500">
+                  Rent from
+                </p>
+                <p className="text-[#d86c9e]">
+                  {dateRange?.startDate.toDateString()}
+                </p>
+              </div>
+              <div
+                className="group flex flex-col  p-2 px-6 hover:bg-red-200 hover:rounded-3xl"
+                onClick={handleDatePickerContainer}
+              >
+                <p className="text-[#969e48] group-hover:scale-110 transition duration-500">
+                  Rent to
+                </p>
+                <p className="text-[#d86c9e]">
+                  {dateRange?.endDate.toDateString()}
+                </p>
+              </div>
+              <div className="group flex flex-cols p-2 rounded-full hover:bg-red-100 mx-4 transition durantion-1000 ">
+                <IoSearchCircle
+                  className="text-[40px] hover:scale-125 transition durantion-1000 ease-in-out"
+                  style={{ color: "#d86c9e" }}
+                  onClick={handleSearch}
+                />
+              </div>
+            </div>
           </div>
         </nav>
-      </header>
 
-      {/* Mobile Navigation Hidden For now*/}
-      {/* <nav className="fixed lg:hidden bottom-0 left-0 right-0 z-20 ">
-        <div className="bg-white dark:bg-[#141414] ">
-          <ul className="flex w-full justify-between px-4 items-center text-[#3a6066] dark:text-[#007960]">
-            <Link
-              href="/gallery"
-              onClick={() => {
-                setActiveLink("about");
-                setCurrentTabOnLocalStorage("about");
-              }}
-              className={
-                "mx-1 sm:mx-2 px-3 sm:px-4 py-2 flex flex-col items-center text-xs border-t-2 transition-all " +
-                (activeLink === "about"
-                  ? "  border-indigo-500 text-[#3a6066] dark:text-[#007960]"
-                  : " border-transparent")
-              }
-            >
-              <Image
-                src={"/gallery.svg"}
-                height={30}
-                width={30}
-                alt="Gallery"
-                className="hover:grayscale-0 duration-500 ease-in-out"
-              />
-              Our Services
-            </Link>
-          </ul>
-        </div>
-      </nav> */}
+        {/* Date Range Picker Toggle */}
+        {showDateRangePicker && (
+          <div className="flex justify-center">
+            <DateRangePicker
+              ranges={[dateRange]}
+              onChange={handleDateChange}
+              showDateDisplay={false}
+              staticRanges={[]}
+              minDate={new Date()}
+            />
+            <IoIosCloseCircleOutline
+              className="text-[18px] cursor-pointer"
+              style={{ color: "pink" }}
+              onClick={handleDatePickerContainer}
+            />
+          </div>
+        )}
+      </header>
     </>
   );
 }

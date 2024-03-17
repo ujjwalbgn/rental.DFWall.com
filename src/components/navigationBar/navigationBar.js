@@ -45,10 +45,10 @@ export default function NavigationBar() {
       <header
         className={
           "fixed top-0 w-full z-30 transition-all bg-white dark:bg-[#141414]" +
-          (scrollActive ? " shadow-md pt-0" : " pt-4")
+          (scrollActive ? " shadow-md pt-0" : " ")
         }
       >
-        <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 sm:py-4">
+        <nav className="max-w-screen-xl px-6 sm:px-8 lg:px-16 mx-auto grid grid-flow-col py-3 ">
           <div className="col-start-1 col-end-2 flex items-center">
             <Link
               href={"/homepage"}
@@ -58,66 +58,16 @@ export default function NavigationBar() {
               }}
             >
               <Image
-                src={"/DfwAll.png"}
-                width={500}
-                height={500}
+                src={"/DFW_ALL_NBG.png"}
+                width={100}
+                height={100}
                 priority
                 alt="logo"
-                style={{ objectFit: "contain", height: "80px", width: "165px" }}
               />
-              {/* <p className="text-2xl bg-gradient-to-r text-transparent bg-clip-text from-[#003d7b] to-[#3a6066] font-semibold -skew-y-3">
-                Dfw All
-              </p> */}
             </Link>
           </div>
           {/* This will dissapear in mobile view */}
-          <ul className="hidden lg:flex col-start-6 col-end-8 items-center">
-            <Link
-              href="/homepage"
-              onClick={() => {
-                setActiveLink("homepage");
-                setCurrentTabOnLocalStorage("homepage");
-              }}
-              className={
-                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative " +
-                (activeLink === "homepage"
-                  ? "headerLinkActive"
-                  : " headerLinkText")
-              }
-            >
-              Home
-            </Link>
-            <Link
-              href="/"
-              onClick={() => {
-                setActiveLink("services");
-                setCurrentTabOnLocalStorage("services");
-              }}
-              className={
-                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative " +
-                (activeLink === "services"
-                  ? "headerLinkActive"
-                  : " headerLinkText")
-              }
-            >
-              Our Services
-            </Link>
-            <Link
-              href="/"
-              onClick={() => {
-                setActiveLink("about");
-                setCurrentTabOnLocalStorage("about");
-              }}
-              className={
-                "px-4 py-2 mx-2 cursor-pointer animation-hover inline-block relative " +
-                (activeLink === "about"
-                  ? "headerLinkActive"
-                  : " headerLinkText")
-              }
-            >
-              About Us
-            </Link>
-          </ul>
+          <ul className="hidden lg:flex col-start-6 col-end-8 items-center"></ul>
           <div className="col-start-10 col-end-12 font-medium flex justify-end items-center">
             <Link
               href="/contactUs"
@@ -139,8 +89,8 @@ export default function NavigationBar() {
         </nav>
       </header>
 
-      {/* Mobile Navigation */}
-      <nav className="fixed lg:hidden bottom-0 left-0 right-0 z-20 shadow-t ">
+      {/* Mobile Navigation Hidden For now*/}
+      {/* <nav className="fixed lg:hidden bottom-0 left-0 right-0 z-20 ">
         <div className="bg-white dark:bg-[#141414] ">
           <ul className="flex w-full justify-between px-4 items-center text-[#3a6066] dark:text-[#007960]">
             <Link
@@ -167,7 +117,7 @@ export default function NavigationBar() {
             </Link>
           </ul>
         </div>
-      </nav>
+      </nav> */}
     </>
   );
 }

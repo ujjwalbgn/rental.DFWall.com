@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ProductsList } from "../../assets/productsList";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function ProductPage() {
   const productsList = ProductsList;
@@ -11,12 +12,15 @@ export default function ProductPage() {
       <div className="grid grid-flow-row gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {/* Auto Display Products */}
         {productsList.map((product, index) => (
-          <div
+          <motion.div
             className="aspect-square transition-opacity animate-fadeIn cursor-pointer "
             key={product.id}
+            initial={{ opacity: 0, x: -50, y: -10 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 + 0.2 * index }}
           >
             <div className="relative inline-block h-full w-full">
-              <Link href={`/product/${product.id}`}>
+              <Link href={`/product/${product.path}`}>
                 <div className="group border-[#d86c9e]  shadow-[#d86c9e] shadow-lg flex h-full w-full items-center justify-center overflow-hidden rounded-lg border rounded-2xl bg-white hover:border-pink-400  relative border-neutral-200 ">
                   <Image
                     alt={product.product}
@@ -39,7 +43,7 @@ export default function ProductPage() {
                 </div>
               </Link>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

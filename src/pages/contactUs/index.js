@@ -4,9 +4,12 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactUs() {
   // States for contact form fields
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [eventType, setEventType] = useState("");
+  const [eventDate, setEventDate] = useState("");
   const [message, setMessage] = useState("");
   const [captcha, setCaptcha] = useState("");
 
@@ -29,8 +32,12 @@ export default function ContactUs() {
     let tempErrors = {};
     let isValid = true;
 
-    if (fullName.length <= 0) {
-      tempErrors["fullName"] = true;
+    if (firstName.length <= 0) {
+      tempErrors["firstName"] = true;
+      isValid = false;
+    }
+    if (lastName.length <= 0) {
+      tempErrors["lastName"] = true;
       isValid = false;
     }
     if (email.length <= 0) {
@@ -39,6 +46,14 @@ export default function ContactUs() {
     }
     if (phone.length <= 0) {
       tempErrors["phone"] = true;
+      isValid = false;
+    }
+    if (eventType.length <= 0) {
+      tempErrors["eventType"] = true;
+      isValid = false;
+    }
+    if (!eventDate) {
+      tempErrors["eventDate"] = true;
       isValid = false;
     }
     if (message.length <= 0) {
@@ -68,11 +83,32 @@ export default function ContactUs() {
 
     if (isValidForm) {
       setButtonText("Sending");
+
+      // Format Date First
+      const selectedDateTime = new Date(eventDate);
+      const formattedDate = `${
+        selectedDateTime.getMonth() + 1
+      }/${selectedDateTime.getDate()}/${selectedDateTime.getFullYear()}`;
+      const hours = selectedDateTime.getHours() % 12 || 12;
+      const minutes = selectedDateTime.getMinutes().toString().padStart(2, "0");
+      const amPm = selectedDateTime.getHours() >= 12 ? "pm" : "am";
+      const formattedTime = `${hours}:${minutes} ${amPm}`;
+
+      let messageCustom =
+        "Hello Admin. You have a new contact request. The person is trying to make a reservation for the event of " +
+        eventType +
+        " on " +
+        formattedDate +
+        " " +
+        formattedTime +
+        ". Please reach out to them to confirm the reservation using the phone number provided above. Thank you. " +
+        message;
+
       const res = await fetch("/api/sendgrid", {
         body: JSON.stringify({
           email: email,
           fullName: fullName,
-          message: message,
+          message: messageCustom,
           phone: phone,
           captcha: captcha,
         }),
@@ -89,10 +125,12 @@ export default function ContactUs() {
         setButtonText("Submit Now");
 
         // Reset form fields
-        setFullName("");
+        setFirstName("");
+        setLastName("");
         setEmail("");
         setPhone("");
-        setMessage("");
+        setEventType("");
+        setEventDate("");
         setCaptcha("");
         recaptchaRef.current.reset();
         return;
@@ -102,10 +140,12 @@ export default function ContactUs() {
       setButtonText("Submit Now");
 
       // Reset form fields
-      setFullName("");
+      setFirstName("");
+      setLastName("");
       setEmail("");
       setPhone("");
-      setMessage("");
+      setEventType("");
+      setEventDate("");
       setCaptcha("");
       recaptchaRef.current.reset();
     }
@@ -137,52 +177,73 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="relative mt-48 mb-40" id="contactUs">
+    <div className="relative mx-auto max-w-screen-xl pt-40 px-4 md:px-10 pb-20">
       <motion.div
-        className=" max-w-5xl self-center mx-auto "
+        className="rounded-lg border border-pink-200 bg-white p-8 md:p-12 lg:gap-8 z-1 shadow-lg drop-shadow-xl"
         initial={{ y: -500 }}
         animate={{ y: 0 }}
         transition={{ duration: 3, type: "spring" }}
       >
         <motion.div className="mb-6 sm:mb-0 text-center px-4">
-          <h5 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed font-medium text-[#003d7b]">
-            We Look Forward To Assisting You
+          <h5 className="text-lg sm:text-2xl lg:text-3xl leading-relaxed italic font-medium text-[#d86c9e]">
+            Let's Talk
           </h5>
-          <p className="text-center font-medium text-sm sm:text-lg text-[#3a6066] dark:text-[#007960]">
-            <a href="tel:4692982709">(469) 298-2709</a> | IndianV3llc@gmail.com
-          </p>
-          <p className="text-center font-medium text-sm sm:text-lg text-[#3a6066] dark:text-[#007960] mt-5">
-            Please complete the form below and someone will get back to you as
-            soon as possible.
-          </p>
         </motion.div>
         <motion.div className="my-10 mx-4">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col text-[#3a6066] dark:text-[#007960]"
+            className="flex flex-col text-[#969e48] "
           >
-            <label htmlFor="fullname" className="font-medium mt-8  text-left">
-              Full Name
-              <span className="text-red-500 dark:text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="fullName"
-              className={`px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200  focus:ring-4  ${
-                errors.fullName
-                  ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
-                  : "border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
-              }`}
-              value={fullName}
-              onChange={(e) => {
-                setFullName(e.target.value);
-              }}
-            />
-            {errors?.fullName && (
-              <span className="text-red-500 text-left">
-                Name cannot be empty.
-              </span>
-            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+              <div className="flex flex-col">
+                <label htmlFor="fullname" className="font-medium text-left">
+                  First Name
+                  <span className="text-red-500 dark:text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  className={`px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200  focus:ring-4  ${
+                    errors.firstName
+                      ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
+                      : "border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
+                  }`}
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
+                />
+                {errors?.firstName && (
+                  <span className="text-red-500 text-left">
+                    First Name cannot be empty.
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="fullname" className="font-medium  text-left">
+                  Last Name
+                  <span className="text-red-500 dark:text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  className={`px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200  focus:ring-4  ${
+                    errors.lastName
+                      ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
+                      : "border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
+                  }`}
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
+                />
+                {errors?.lastName && (
+                  <span className="text-red-500 text-left">
+                    Last Name cannot be empty.
+                  </span>
+                )}
+              </div>
+            </div>
 
             <label htmlFor="email" className=" font-medium mt-4  text-left">
               Email<span className="text-red-500">*</span>
@@ -227,6 +288,55 @@ export default function ContactUs() {
               </span>
             )}
 
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+              <div className="flex flex-col">
+                <label htmlFor="fullname" className="font-medium text-left">
+                  Event Type <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="eventType"
+                  className={`px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200  focus:ring-4  ${
+                    errors.eventType
+                      ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
+                      : "border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
+                  }`}
+                  value={eventType}
+                  onChange={(e) => {
+                    setEventType(e.target.value);
+                  }}
+                />
+                {errors?.eventType && (
+                  <span className="text-red-500 text-left">
+                    Event Type cannot be empty.
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="fullname" className="font-medium  text-left">
+                  Event Date <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="datetime-local"
+                  name="eventDate"
+                  className={`px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200  focus:ring-4  ${
+                    errors.eventDate
+                      ? "border-red-600 focus:border-red-600 ring-red-100 dark:ring-0"
+                      : "border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
+                  }`}
+                  value={eventDate}
+                  onChange={(e) => {
+                    setEventDate(e.target.value);
+                  }}
+                />
+                {errors?.eventDate && (
+                  <span className="text-red-500 text-left">
+                    Please select the event date
+                  </span>
+                )}
+              </div>
+            </div>
+
             <label htmlFor="message" className="font-medium mt-4  text-left">
               Message<span className="text-red-500">*</span>
             </label>
@@ -267,7 +377,7 @@ export default function ContactUs() {
               <button
                 type="submit"
                 disabled={buttonText === "Sending"}
-                className="p-2 border-2 text-[#003d7b] border-[#003d7b] font-semibold rounded-3xl px-4 hover:bg-green-400 hover:text-white "
+                className="p-2 border-2 text-[#d86c96] border-[#d86c9e] font-semibold rounded-3xl px-4 hover:bg-red-300 hover:text-white "
               >
                 {buttonText}{" "}
                 {buttonText === "Sending" && (
@@ -296,13 +406,13 @@ export default function ContactUs() {
             </div>
             <div className="text-center">
               {showSuccessMessage && (
-                <p className="text-green-500 font-semibold text-sm my-2 mt-4">
+                <p className=" text-[#d86c96] font-semibold text-sm my-2 mt-4">
                   Thank You! Your Message has been delivered.
                   {resetSuccessMessage()}
                 </p>
               )}
               {showFailureMessage && (
-                <p className="text-red-500 mt-4">
+                <p className=" text-[#d86c96] mt-4">
                   Oops! Something went wrong, please try again.
                   {resetFailureMessage()}
                 </p>
